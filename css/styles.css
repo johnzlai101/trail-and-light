@@ -1,0 +1,160 @@
+:root {
+  --bg: #0e0f11;
+  --surface: #17181d;
+  --surface-2: #1e2026;
+  --text: #ecebe7;
+  --muted: #a8aab4;
+  --accent: #e8a33d;
+  --border: #26272e;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(14, 15, 17, 0.92);
+  backdrop-filter: blur(8px);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: 0.02em; }
+.brand span { color: var(--accent); }
+.brand:hover { text-decoration: none; }
+.admin-link, .site-header nav a { font-size: 0.95rem; }
+
+.hero { padding: 56px 0 28px; max-width: 720px; }
+.hero h1 { font-size: 2.4rem; margin: 0 0 10px; letter-spacing: -0.01em; }
+.hero p { color: var(--muted); font-size: 1.08rem; margin: 0; }
+
+/* Trip cards — photos keep their natural ratio (no cropping) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 22px;
+  align-items: start;
+  padding: 10px 0 70px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: #3a3b44; }
+.card a { color: inherit; }
+.card a:hover { text-decoration: none; }
+.card img { width: 100%; height: auto; display: block; background: #000; }
+.card-body { padding: 16px 18px 20px; }
+.card-date { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.card h2 { margin: 6px 0 6px; font-size: 1.25rem; }
+.card p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+.card-tags { margin-top: 10px; }
+
+/* Trip page */
+.trip-hero img {
+  width: 100%; height: auto; max-height: 72vh; object-fit: contain;
+  display: block; background: #000; border-radius: var(--radius);
+}
+.trip-meta { color: var(--muted); margin: 18px 0 6px; font-size: 0.95rem; }
+.trip-title { font-size: 2.2rem; margin: 4px 0 14px; letter-spacing: -0.01em; }
+.trip-stats {
+  display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px;
+}
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 14px; font-size: 0.92rem;
+}
+.stat b { color: var(--accent); font-weight: 600; }
+.trip-story { max-width: 720px; margin: 0 0 34px; }
+.trip-story p { margin: 0 0 1em; }
+.tag {
+  display: inline-block; background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 2px 12px; font-size: 0.82rem; color: var(--muted);
+  margin: 0 6px 6px 0;
+}
+
+/* Gallery — masonry, every photo at its original ratio */
+.gallery { columns: 3 290px; column-gap: 14px; margin: 0 0 40px; }
+.gallery figure { margin: 0 0 14px; break-inside: avoid; }
+.gallery img {
+  width: 100%; height: auto; display: block;
+  border-radius: 10px; cursor: zoom-in; background: #000;
+}
+.gallery figcaption { color: var(--muted); font-size: 0.85rem; padding: 8px 4px 0; }
+
+.videos { display: grid; gap: 18px; margin: 0 0 44px; }
+.videos video { width: 100%; border-radius: 10px; background: #000; }
+.video-cap { color: var(--muted); font-size: 0.9rem; margin: 6px 0 0; }
+
+.section-title { font-size: 1.15rem; margin: 0 0 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; }
+
+.trip-nav { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0 70px; }
+.trip-nav a {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 16px; color: var(--text); font-size: 0.95rem; max-width: 46%;
+}
+.trip-nav a:hover { text-decoration: none; border-color: #3a3b44; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px; cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 94vw; max-height: 84vh; border-radius: 6px; }
+.lightbox p { color: var(--muted); margin: 12px 0 0; max-width: 720px; text-align: center; }
+.lightbox-close {
+  position: absolute; top: 14px; right: 20px;
+  background: none; border: none; color: #fff; font-size: 2.2rem; cursor: pointer;
+}
+
+/* Admin form */
+.admin-form { max-width: 680px; padding: 30px 0 20px; }
+.admin-form label { display: block; margin: 0 0 16px; font-size: 0.95rem; }
+.admin-form input, .admin-form textarea {
+  width: 100%; margin-top: 6px; padding: 10px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font: inherit; font-size: 0.95rem;
+}
+.admin-form textarea { min-height: 110px; resize: vertical; font-family: ui-monospace, monospace; font-size: 0.88rem; }
+.btn {
+  display: inline-block; background: var(--accent); color: #141414; border: none;
+  border-radius: 10px; padding: 12px 26px; font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn-ghost {
+  display: inline-block; background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 20px; cursor: pointer; font-size: 0.95rem;
+}
+#json-output { min-height: 260px; }
+.hint { color: var(--muted); font-size: 0.9rem; }
+.admin-steps { max-width: 720px; padding: 0 0 70px; }
+.admin-steps li { margin-bottom: 10px; }
+
+.site-footer { border-top: 1px solid var(--border); padding: 26px 0; color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.8rem; }
+  .trip-title { font-size: 1.7rem; }
+  .trip-nav { flex-direction: column; }
+  .trip-nav a { max-width: 100%; }
+}

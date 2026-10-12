@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trail &amp; Light — John's Trip Journal</title>
+<meta name="description" content="Hiking trips and photography by John.">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">Trail <span>&amp;</span> Light</a>
+    <nav><a href="admin.html" class="admin-link">+ New trip</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Trips, trails &amp; photographs</h1>
+    <p>A personal journal of hikes and the photos that came home with them. Every image shown in its original ratio — nothing cropped.</p>
+  </section>
+
+  <section id="trip-cards" class="cards" aria-label="Trips"></section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap"><p>© John · Built as a static site, loads fast everywhere.</p></div>
+</footer>
+
+<script src="js/trips.js"></script>
+<script src="js/app.js"></script>
+<script>renderHome();</script>
+</body>
+</html>

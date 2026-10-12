@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New trip — Trail &amp; Light</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">Trail <span>&amp;</span> Light</a>
+    <nav><a href="index.html">← All trips</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Add a new trip</h1>
+    <p class="hint">Fill this in, hit <b>Generate</b>, then copy the result into <b>js/trips.js</b>. Photos go in the <b>photos</b> folder first.</p>
+  </section>
+
+  <form class="admin-form" id="trip-form" onsubmit="return false;">
+    <label>Trip ID (lowercase, no spaces)
+      <input id="f-id" placeholder="mt-chocorua-oct-2026" required></label>
+    <label>Title
+      <input id="f-title" placeholder="Mt. Chocorua, Middle Sister & Bald Mountain" required></label>
+    <label>Location
+      <input id="f-location" placeholder="Albany, New Hampshire"></label>
+    <label>Date
+      <input id="f-date" type="date" required></label>
+    <label>Cover photo (path)
+      <input id="f-cover" placeholder="photos/chocorua-summit.jpg"></label>
+    <label>Distance <input id="f-distance" placeholder="10.5 mi"></label>
+    <label>Elevation gain <input id="f-elevation" placeholder="3,300 ft"></label>
+    <label>Duration <input id="f-duration" placeholder="1 day"></label>
+    <label>Tags (comma separated)
+      <input id="f-tags" placeholder="hiking, foliage, White Mountains"></label>
+    <label>Summary (one or two sentences)
+      <input id="f-summary" placeholder="Peak foliage loop over open ledges..."></label>
+    <label>Story (one paragraph per line)
+      <textarea id="f-story" placeholder="Started before sunrise...&#10;The ledges above treeline..."></textarea></label>
+    <label>Photos (one per line: <i>path | caption</i>)
+      <textarea id="f-photos" placeholder="photos/chocorua-summit.jpg | 360° views from the summit&#10;photos/ledge.jpg | Morning light on Carter Ledge"></textarea></label>
+    <label>Videos (one per line: <i>path | caption</i>)
+      <textarea id="f-videos" placeholder="photos/summit-360.mp4 | Summit panorama"></textarea></label>
+    <button class="btn" type="button" onclick="generate()">Generate JSON</button>
+  </form>
+
+  <section style="padding-bottom:70px">
+    <h2 class="section-title">Trip JSON — paste into js/trips.js</h2>
+    <textarea id="json-output" class="admin-form" style="max-width:100%" readonly placeholder="Your trip JSON will appear here..."></textarea>
+    <div style="margin-top:12px"><button class="btn-ghost" onclick="copyJson()">Copy to clipboard</button></div>
+
+    <h2 class="section-title" style="margin-top:40px">How to publish a trip</h2>
+    <ol class="admin-steps hint" style="font-size:1rem; color:var(--text)">
+      <li>Copy your photos (JPG/PNG, any ratio — they're never cropped) into the <b>photos</b> folder. Keep filenames simple, no spaces.</li>
+      <li>Paste the generated JSON into <b>js/trips.js</b>, inside the <b>TRIPS</b> array (add a comma after the previous trip's closing <b>}</b>).</li>
+      <li>Open <b>index.html</b> in a browser to preview. Then push to GitHub and Cloudflare Pages redeploys automatically.</li>
+    </ol>
+  </section>
+</main>
+
+<script>
+function val(id){ return document.getElementById(id).value.trim(); }
+function lines(id){ return val(id).split("\n").map(s=>s.trim()).filter(Boolean); }
+
+function generate(){
+  const trip = {
+    id: val("f-id"),
+    title: val("f-title"),
+    location: val("f-location"),
+    date: val("f-date"),
+    cover: val("f-cover"),
+    distance: val("f-distance"),
+    elevation: val("f-elevation"),
+    duration: val("f-duration"),
+    tags: val("f-tags").split(",").map(s=>s.trim()).filter(Boolean),
+    summary: val("f-summary"),
+    story: lines("f-story"),
+    photos: lines("f-photos").map(l => {
+      const [src, ...rest] = l.split("|");
+      return { src: src.trim(), caption: rest.join("|").trim() };
+    }),
+    videos: lines("f-videos").map(l => {
+      const [src, ...rest] = l.split("|");
+      return { src: src.trim(), caption: rest.join("|").trim() };
+    })
+  };
+  const out = "  " + JSON.stringify(trip, null, 2).replace(/\n/g, "\n  ") + ",";
+  document.getElementById("json-output").value = out;
+}
+
+function copyJson(){
+  const t = document.getElementById("json-output");
+  t.select();
+  document.execCommand("copy");
+}
+</script>
+</body>
+</html>
