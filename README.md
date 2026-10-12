@@ -59,3 +59,9 @@ It resizes everything to web size (longest edge 1920px, original aspect ratio â€
 never cropped), drops the files into `photos/`, and prints the JSON lines to
 paste into `js/trips.js`. Add captions to each line, preview `index.html`,
 then redeploy.
+
+## Deployment
+
+Auto-deploys to Cloudflare Pages from GitHub: push to `main` and the site
+at https://trail-and-light.pages.dev updates within a minute or two.
+No build command; the repo root is served as-is.
